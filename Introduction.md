@@ -33,11 +33,10 @@ It is a reasonably linear process(合理的线性过程), easy to understand, an
 There are, however, a couple of disadvantages that continue to plague(困扰) the model:
 但是,这种模型是有一些缺点一直“困扰”着它:
 
-1. Each of these threads or processes carries some overhead(开销) with it. On some machines, PHP + Apache can take up as much as 10–15MB per process. Even in environments where a large server runs constantly and forks threads to process the requests, each of these(ps: 线程) carries some overhead to create a new stack and execution environment, and you frequently run into the limits of the server’s available memory.
+- Each of these threads or processes carries some overhead(开销) with it. On some machines, PHP + Apache can take up as much as 10–15MB per process. Even in environments where a large server runs constantly and forks threads to process the requests, each of these(ps: 线程) carries some overhead to create a new stack and execution environment, and you frequently run into the limits of the server’s available memory.
+- In most common usage scenarios where a web server communicates with a database, caching server, external server, or file system, it spends most of its time sitting around doing nothing and waits for these services to finish and return their responses. While it is sitting there doing nothing, this thread is effectively “blocked” from doing anything else. The resources it consumes(消耗) and the process or thread in which it runs are entirely frozen waiting for those responses to come back.
 
 每一个线程或进程都携带着一些开销。在某些PHP + Apache机器上，每个进程携带者多达10–15MB的开销。即使是无休止运行的大型服务器环境中，为处理请求进行fork线程操作，每个线程携带者创建一个新的堆栈和执行环境的开销，你将会经常遇到服务器可用内存的限制。
-
-2. In most common usage scenarios where a web server communicates with a database, caching server, external server, or file system, it spends most of its time sitting around doing nothing and waits for these services to finish and return their responses. While it is sitting there doing nothing, this thread is effectively “blocked” from doing anything else. The resources it consumes(消耗) and the process or thread in which it runs are entirely frozen waiting for those responses to come back.
 
 最常见使用场景是，Web服务器与数据库、缓存服务器、外部服务器或文件系统“打交道”，Web服务器大部分时间都无所事事地等待这些服务的完成，并返回它们的响应内容。Web服务器虽然无所事事，这个线程是有效的“阻塞”其它操作。资源请求的内存消耗，运行中的进程或线程的被完全冻结，只是为了等待着响应的返回。
 
@@ -48,7 +47,7 @@ Only after the external component(组件) has finally sent back its response wil
 
 So, although it’s pretty easy to understand and work with, you do have a model that can be quite inefficient if your scripts spend most of their time waiting for database servers to finish running a query—an extremely common scenario for a lot of modern web applications.
 
-尽管这样的模型易于理解并跟它"打交道"！当编程脚本花费大量的时间等待数据库服务器完成查询操作的响应，这是非常低效的！对于很多现代Web应用一种极为常见的场景。
+尽管这样的模型易于理解并跟它"打交道"！当编程脚本花费大量的时间等待数据库服务器完成查询操作的响应，这种模型显得是非常低效的！对于很多现代Web应用，这是一种极为常见的场景。
 
 
 Many solutions to this problem have been developed and are in common use. You can buy ever bigger and more powerful web servers with more memory. You can replace more powerful and feature-rich HTTP servers such as Apache with smaller, lightweight ones such as lighttpd or nginx. You can build stripped-down or reduced versions of your favorite web programing language such as PHP or Python. (Indeed, Facebook has taken this one step further and built a
@@ -70,7 +69,7 @@ JavaScript，这门旧的(1995年左右被创建)的编写客户端脚本的编�
 At the same time, a new generation of browser competition has erupted(爆发), with Google’s Chrome, Mozilla’s Firefox, Apple’s Safari, and Microsoft’s Internet Explorer all vying for the crown of browser king. As part of this, all these companies are investing heavily in the
 JavaScript portion of these systems as modern web applications continue to grow ever-more dynamic and script-based. In particular, Google Chrome’s V8 JavaScript runtime is particularly fast and also open-sourced for use by anybody.
 
-与此同时, 新一场浏览器竞争正在爆发, Google’s Chrome、Mozilla的Firefox、Apple的Safari和Microsoft的Internet Explorer 正在争夺浏览器之王的王冠. 作为其中的一部分，所有这些公司都在大举投资在这些系统中的JavaScript部分，并让它作为现代网络应用，不断让它变得更加动态和基于脚本的。特别是，谷歌Chrome的V8 JavaScript运行时特别快而且开源，任何人都可以使用它。
+与此同时, 新一场浏览器竞争正在爆发, Google的Chrome、Mozilla的Firefox、Apple的Safari和Microsoft的Internet Explorer 正为争夺浏览器之王的王冠而斗得你死我活！ 作为其中的一部分，所有这些公司都在大举投资在这些系统中的JavaScript部分，并让它作为现代网络应用，不断让它变得更加动态和基于脚本的。特别是，谷歌Chrome的V8 JavaScript运行时特别快而且开源，任何人都可以使用它。
 
 With all these things in place, the opportunity arose for somebody to come along with a new approach to network (web) application development. Thus, the birth of Node.js.
 
